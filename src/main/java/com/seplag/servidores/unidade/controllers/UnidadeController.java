@@ -45,4 +45,11 @@ public class UnidadeController {
         return ResponseEntity.ok(modelMapper.map(unidade, UnidadeResponse.class));
     }
 
+    @DeleteMapping("/api/v1/unidades/{id}")
+    public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
+        unidadeService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

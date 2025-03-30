@@ -49,4 +49,13 @@ public class UnidadeService {
         log.info("Buscando unidade com id {}", id);
         return unidadeRepository.findById(id);
     }
+
+    public void deleteById(Long id) {
+        log.info("Deletando unidade com id {}", id);
+        Unidade unidade = unidadeRepository
+                .findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Unidade não encontrada com o id %d".formatted(id)));
+
+        unidadeRepository.delete(unidade);
+    }
 }
