@@ -51,6 +51,18 @@ public class Endereco {
     }
 
     @Override
+    public String toString() {
+        return "Endereco{" +
+                "id=" + id +
+                ", tipoLogradouro=" + tipoLogradouro +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero=" + numero +
+                ", bairro='" + bairro + '\'' +
+                ", cidade=" + cidade +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         Endereco endereco = (Endereco) object;
