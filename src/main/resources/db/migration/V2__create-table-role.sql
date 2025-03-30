@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS role (
+    role VARCHAR(64) PRIMARY KEY, -- Chave primária natural
+    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
