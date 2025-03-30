@@ -1,0 +1,9 @@
+services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: seplag
+      POSTGRES_PASSWORD: e8iQi1OacIFRtiyyL03GPEDaS13j3j5b
+      POSTGRES_DB: seplag-servidores
+    ports:
+      - "5432:5432"
