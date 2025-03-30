@@ -1,6 +1,7 @@
 package com.seplag.servidores.unidade.services;
 
 import com.seplag.servidores.compartilhado.entities.Endereco;
+import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
 import com.seplag.servidores.compartilhado.services.EnderecoService;
 import com.seplag.servidores.unidade.dtos.requests.UnidadeRequest;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -42,4 +45,8 @@ public class UnidadeService {
         return unidadeRepository.findAll(pageable);
     }
 
+    public Optional<Unidade> buscarPorId(Long id) {
+        log.info("Buscando unidade com id {}", id);
+        return unidadeRepository.findById(id);
+    }
 }
