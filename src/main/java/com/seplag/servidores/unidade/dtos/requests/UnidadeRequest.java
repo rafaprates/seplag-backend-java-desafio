@@ -1,4 +1,4 @@
-package com.seplag.servidores.unidade.dtos;
+package com.seplag.servidores.unidade.dtos.requests;
 
 import com.seplag.servidores.compartilhado.dtos.request.NovoEnderecoRequest;
 import jakarta.annotation.Nullable;

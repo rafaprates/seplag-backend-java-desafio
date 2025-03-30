@@ -3,11 +3,13 @@ package com.seplag.servidores.unidade.services;
 import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
 import com.seplag.servidores.compartilhado.services.EnderecoService;
-import com.seplag.servidores.unidade.dtos.UnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.UnidadeRequest;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.repositories.UnidadeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -34,4 +36,10 @@ public class UnidadeService {
 
         return unidadeRepository.save(unidade).getId();
     }
+
+    public Page<Unidade> buscarTodas(Pageable pageable) {
+        log.info("Buscando todas as unidades");
+        return unidadeRepository.findAll(pageable);
+    }
+
 }
