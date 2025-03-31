@@ -5,14 +5,15 @@ import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.entities.Pessoa;
 import com.seplag.servidores.servidores.temporario.dtos.CriarServidorTemporarioDTO;
+import com.seplag.servidores.servidores.temporario.dtos.ServidorTemporarioResponse;
 import com.seplag.servidores.servidores.temporario.entities.ServidorTemporario;
 import com.seplag.servidores.servidores.temporario.services.ServidorTemporarioService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,10 +25,10 @@ import java.util.stream.Collectors;
 public class ServidorTemporarioController {
 
     private final ServidorTemporarioService servidorTemporarioService;
+    private final ModelMapper modelMapper;
 
     @PostMapping
     public ResponseEntity<RecursoIdResponse> registrarServidorTemporario(@RequestBody CriarServidorTemporarioDTO request) {
-
         Set<Endereco> enderecoEntities = request
                 .pessoa()
                 .enderecos()
@@ -59,6 +60,15 @@ public class ServidorTemporarioController {
         long id = servidorTemporarioService.registrarServidorTemporario(servidorTemporarioEntity).getId();
 
         return ResponseEntity.ok(new RecursoIdResponse(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ServidorTemporarioResponse>> buscarTodos(Pageable pageable) {
+        Page<ServidorTemporarioResponse> response = servidorTemporarioService
+                .buscarTodos(pageable)
+                .map(st -> modelMapper.map(st, ServidorTemporarioResponse.class));
+
+        return ResponseEntity.ok(response);
     }
 
 }

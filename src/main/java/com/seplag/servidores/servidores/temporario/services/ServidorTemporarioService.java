@@ -5,6 +5,8 @@ import com.seplag.servidores.servidores.temporario.entities.ServidorTemporario;
 import com.seplag.servidores.servidores.temporario.repository.ServidorTemporarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,4 +23,9 @@ public class ServidorTemporarioService {
         return servidorTemporarioRepository.save(servidorTemporario);
     }
 
+
+    public Page<ServidorTemporario> buscarTodos(Pageable pageable) {
+        log.info("Buscando todos os servidores temporários");
+        return servidorTemporarioRepository.findAll(pageable);
+    }
 }
