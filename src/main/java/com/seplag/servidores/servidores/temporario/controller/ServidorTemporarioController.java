@@ -4,7 +4,8 @@ import com.seplag.servidores.compartilhado.dtos.response.RecursoIdResponse;
 import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.entities.Pessoa;
-import com.seplag.servidores.servidores.temporario.dtos.CriarServidorTemporarioDTO;
+import com.seplag.servidores.servidores.temporario.dtos.AtualizarServidorTemporarioDTO;
+import com.seplag.servidores.servidores.temporario.dtos.NovoServidorTemporarioDTO;
 import com.seplag.servidores.servidores.temporario.dtos.ServidorTemporarioResponse;
 import com.seplag.servidores.servidores.temporario.entities.ServidorTemporario;
 import com.seplag.servidores.servidores.temporario.services.ServidorTemporarioService;
@@ -28,7 +29,7 @@ public class ServidorTemporarioController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<RecursoIdResponse> registrarServidorTemporario(@RequestBody CriarServidorTemporarioDTO request) {
+    public ResponseEntity<RecursoIdResponse> registrarServidorTemporario(@RequestBody NovoServidorTemporarioDTO request) {
         Set<Endereco> enderecoEntities = request
                 .pessoa()
                 .enderecos()
@@ -75,6 +76,46 @@ public class ServidorTemporarioController {
     public ResponseEntity<ServidorTemporarioResponse> buscarPorId(@PathVariable Long id) {
         ServidorTemporario servidorTemporario = servidorTemporarioService.buscarPorId(id);
         ServidorTemporarioResponse response = modelMapper.map(servidorTemporario, ServidorTemporarioResponse.class);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ServidorTemporarioResponse> atualizarServidorTemporario(
+            @PathVariable Long id,
+            @RequestBody AtualizarServidorTemporarioDTO request
+    ) {
+        Set<Endereco> enderecoEntities = request
+                .pessoa()
+                .enderecos()
+                .stream()
+                .map(e -> new Endereco(
+                        e.id(),
+                        e.tipoLogradouro(),
+                        e.logradouro(),
+                        e.numero(),
+                        e.bairro(),
+                        new Cidade(e.cidadeId())
+                ))
+                .collect(Collectors.toSet());
+
+        Pessoa pessoaEntity = new Pessoa(
+                request.pessoa().nome(),
+                request.pessoa().dataNascimento(),
+                request.pessoa().sexo(),
+                request.pessoa().mae(),
+                request.pessoa().pai(),
+                enderecoEntities
+        );
+
+        ServidorTemporario servidorTemporarioEntity = new ServidorTemporario(
+                pessoaEntity,
+                request.dataAdmissao(),
+                request.dataDemissao()
+        );
+
+        servidorTemporarioService.atualizarPorId(id, servidorTemporarioEntity);
+
+        ServidorTemporarioResponse response = modelMapper.map(servidorTemporarioEntity, ServidorTemporarioResponse.class);
         return ResponseEntity.ok(response);
     }
 }
