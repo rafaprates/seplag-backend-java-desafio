@@ -1,9 +1,27 @@
 services:
   database:
     image: postgres:17
+    container_name: postgres
     environment:
       POSTGRES_USER: seplag
       POSTGRES_PASSWORD: e8iQi1OacIFRtiyyL03GPEDaS13j3j5b
       POSTGRES_DB: seplag-servidores
     ports:
       - "5432:5432"
+
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: seplag
+      MINIO_ROOT_PASSWORD: e8iQi1OacIFRtiyyL03GPEDaS13j3j5b
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
