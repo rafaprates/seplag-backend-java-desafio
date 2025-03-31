@@ -1,5 +1,6 @@
 package com.seplag.servidores.servidores.temporario.services;
 
+import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.compartilhado.services.PessoaService;
 import com.seplag.servidores.servidores.temporario.entities.ServidorTemporario;
 import com.seplag.servidores.servidores.temporario.repository.ServidorTemporarioRepository;
@@ -27,5 +28,12 @@ public class ServidorTemporarioService {
     public Page<ServidorTemporario> buscarTodos(Pageable pageable) {
         log.info("Buscando todos os servidores temporários");
         return servidorTemporarioRepository.findAll(pageable);
+    }
+
+    public ServidorTemporario buscarPorId(Long id) {
+        log.info("Buscando servidor temporário com ID: {}", id);
+        return servidorTemporarioRepository
+                .findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Servidor temporário não encontrado"));
     }
 }

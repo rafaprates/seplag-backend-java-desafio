@@ -71,4 +71,10 @@ public class ServidorTemporarioController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ServidorTemporarioResponse> buscarPorId(@PathVariable Long id) {
+        ServidorTemporario servidorTemporario = servidorTemporarioService.buscarPorId(id);
+        ServidorTemporarioResponse response = modelMapper.map(servidorTemporario, ServidorTemporarioResponse.class);
+        return ResponseEntity.ok(response);
+    }
 }
