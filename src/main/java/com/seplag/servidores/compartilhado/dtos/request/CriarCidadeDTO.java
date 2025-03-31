@@ -4,7 +4,7 @@ import com.seplag.servidores.compartilhado.entities.Estado;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record NovaCidadeRequest(
+public record CriarCidadeDTO(
         @NotNull @NotBlank String nome,
         @NotNull Estado uf
 ) { }

@@ -1,6 +1,6 @@
 package com.seplag.servidores.unidade.controllers;
 
-import com.seplag.servidores.compartilhado.dtos.response.RecursoIdResponse;
+import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
 import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
@@ -23,9 +23,9 @@ public class UnidadeController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/api/v1/unidades")
-    public ResponseEntity<RecursoIdResponse> criarUnidade(@Valid @RequestBody NovaUnidadeRequest request) {
+    public ResponseEntity<RecursoCriadoDTO> criarUnidade(@Valid @RequestBody NovaUnidadeRequest request) {
         Long id = unidadeService.criar(request);
-        return ResponseEntity.ok(new RecursoIdResponse(id));
+        return ResponseEntity.ok(new RecursoCriadoDTO(id));
     }
 
     @GetMapping("/api/v1/unidades")

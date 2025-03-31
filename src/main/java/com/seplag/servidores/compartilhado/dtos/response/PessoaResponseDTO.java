@@ -9,13 +9,13 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class PessoaResponse {
+public class PessoaResponseDTO {
 
     private String nome;
     private LocalDate dataNascimento;
     private Sexo sexo;
     private String mae;
     private String pai;
-    Set<EnderecoResponse> enderecos;
+    Set<EnderecoResponseDTO> enderecos;
 
 }

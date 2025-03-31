@@ -1,5 +1,5 @@
 package com.seplag.servidores.compartilhado.dtos.response;
 
-public record RecursoIdResponse(
+public record RecursoCriadoDTO(
         Long id
 ) { }

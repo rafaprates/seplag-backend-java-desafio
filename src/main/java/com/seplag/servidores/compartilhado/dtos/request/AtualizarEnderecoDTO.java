@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
 public record AtualizarEnderecoDTO(
-        Long id,
+        @NotNull Long id,
         TipoLogradouro tipoLogradouro,
         @NotNull @NotBlank String logradouro,
         @Positive Integer numero,

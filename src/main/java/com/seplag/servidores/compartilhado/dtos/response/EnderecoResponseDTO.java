@@ -6,14 +6,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnderecoResponse {
+public class EnderecoResponseDTO {
 
     private Long id;
     private String tipoLogradouro;
     private String logradouro;
     private int numero;
     private String bairro;
-    private CidadeResponse cidade;
+    private CidadeResponseDTO cidade;
 
     public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
         this.tipoLogradouro = tipoLogradouro.getDescricao();

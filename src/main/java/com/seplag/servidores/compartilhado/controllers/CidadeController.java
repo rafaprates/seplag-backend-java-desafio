@@ -1,7 +1,7 @@
 package com.seplag.servidores.compartilhado.controllers;
 
-import com.seplag.servidores.compartilhado.dtos.request.NovaCidadeRequest;
-import com.seplag.servidores.compartilhado.dtos.response.RecursoIdResponse;
+import com.seplag.servidores.compartilhado.dtos.request.CriarCidadeDTO;
+import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.services.CidadeService;
 import jakarta.validation.Valid;
@@ -20,12 +20,12 @@ public class CidadeController {
     private final ModelMapper mapper;
 
     @PostMapping("/api/v1/cidades")
-    public ResponseEntity<RecursoIdResponse> criarNovaCidade(@Valid @RequestBody NovaCidadeRequest request) {
+    public ResponseEntity<RecursoCriadoDTO> criarNovaCidade(@Valid @RequestBody CriarCidadeDTO request) {
         Long id = cidadeService.criar(
                 mapper.map(request, Cidade.class)
         );
 
-        return ResponseEntity.ok(new RecursoIdResponse(id));
+        return ResponseEntity.ok(new RecursoCriadoDTO(id));
     }
 
 }

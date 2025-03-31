@@ -11,5 +11,5 @@ public record CriarPessoaDTO(
         String pai,
         LocalDate dataNascimento,
         Sexo sexo,
-        Set<NovoEnderecoRequest> enderecos
+        Set<CriarEnderecoDTO> enderecos
 ) { }

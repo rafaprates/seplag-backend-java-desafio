@@ -1,4 +1,4 @@
-package com.seplag.servidores.servidores.temporario.dtos;
+package com.seplag.servidores.servidores.temporario.dtos.request;
 
 import com.seplag.servidores.compartilhado.dtos.request.CriarPessoaDTO;
 import jakarta.validation.Valid;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Future;
 
 import java.time.LocalDate;
 
-public record NovoServidorTemporarioDTO(
+public record CriarServidorTemporarioDTO(
         @Future LocalDate dataAdmissao,
         @Future LocalDate dataDemissao,
         @Valid CriarPessoaDTO pessoa
