@@ -55,18 +55,6 @@ public class Endereco {
         this.cidade = cidade;
     }
 
-    public Endereco(Long id, TipoLogradouro tipoLogradouro, String logradouro, int numero, String bairro) {
-        this.id = id;
-        this.tipoLogradouro = tipoLogradouro;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.bairro = bairro;
-    }
-
-    public boolean hasId() {
-        return id != null;
-    }
-
     @Override
     public String toString() {
         return "Endereco{" +
@@ -83,7 +71,8 @@ public class Endereco {
     public boolean equals(Object object) {
         if (object == null || getClass() != object.getClass()) return false;
         Endereco endereco = (Endereco) object;
-        return id == endereco.id;
+        if (id == null) return false;
+        return id.equals(endereco.id);
     }
 
     @Override
