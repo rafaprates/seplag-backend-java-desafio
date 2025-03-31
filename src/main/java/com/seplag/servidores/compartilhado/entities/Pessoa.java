@@ -44,6 +44,10 @@ public class Pessoa {
     )
     protected Set<Endereco> enderecos;
 
+    public Pessoa(Long id) {
+        this.id = id;
+    }
+
     public Pessoa(String nome, LocalDate dataNascimento, Sexo pes_sexo, String mae, String pai, Set<Endereco> enderecos) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;

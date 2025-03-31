@@ -1,14 +1,14 @@
 package com.seplag.servidores.compartilhado.dtos.response;
 
 import com.seplag.servidores.compartilhado.entities.Sexo;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
-@Setter
+@AllArgsConstructor
 public class PessoaResponseDTO {
 
     private String nome;
