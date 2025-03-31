@@ -36,7 +36,7 @@ public class Pessoa {
     @Column(name = "pes_pai")
     protected String pai;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "pessoa_endereco",
             joinColumns = @JoinColumn(name = "pes_id"),

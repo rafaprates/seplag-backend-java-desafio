@@ -118,4 +118,10 @@ public class ServidorTemporarioController {
         ServidorTemporarioResponseDTO response = modelMapper.map(servidorTemporarioEntity, ServidorTemporarioResponseDTO.class);
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarServidorTemporario(@PathVariable Long id) {
+        servidorTemporarioService.deletarPorId(id);
+        return ResponseEntity.noContent().build();
+    }
 }

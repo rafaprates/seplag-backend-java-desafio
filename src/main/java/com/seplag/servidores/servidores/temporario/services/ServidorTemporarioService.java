@@ -56,4 +56,10 @@ public class ServidorTemporarioService {
         pessoaService.atualizarPorId(id, novoServidor);
         return servidorTemporarioRepository.save(novoServidor);
     }
+
+    public void deletarPorId(Long id) {
+        log.info("Deletando servidor temporário com ID: {}", id);
+        ServidorTemporario servidorTemporario = buscarPorId(id);
+        servidorTemporarioRepository.delete(servidorTemporario);
+    }
 }
