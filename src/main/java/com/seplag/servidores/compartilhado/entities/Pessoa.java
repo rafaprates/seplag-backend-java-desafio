@@ -26,8 +26,8 @@ public class Pessoa {
     @Column(name = "pes_data_nascimento")
     protected LocalDate dataNascimento;
 
-    @Column
     @Enumerated(EnumType.STRING)
+    @Column(name = "pes_sexo")
     protected Sexo sexo;
 
     @Column(name = "pes_mae")

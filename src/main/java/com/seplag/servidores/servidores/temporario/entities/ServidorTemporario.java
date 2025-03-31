@@ -22,7 +22,7 @@ public class ServidorTemporario extends Pessoa {
     private LocalDate dataDemissao;
 
     public ServidorTemporario(Pessoa pessoa, LocalDate dataAdmissao, LocalDate dataDemissao) {
-        super(pessoa.getNome(), pessoa.getDataNascimento(), pessoa.getPes_sexo(), pessoa.getMae(), pessoa.getPai(), pessoa.getEnderecos());
+        super(pessoa.getNome(), pessoa.getDataNascimento(), pessoa.getSexo(), pessoa.getMae(), pessoa.getPai(), pessoa.getEnderecos());
         this.dataAdmissao = dataAdmissao;
         this.dataDemissao = dataDemissao;
     }
