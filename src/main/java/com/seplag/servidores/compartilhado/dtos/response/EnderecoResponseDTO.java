@@ -1,11 +1,10 @@
 package com.seplag.servidores.compartilhado.dtos.response;
 
-import com.seplag.servidores.compartilhado.entities.TipoLogradouro;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@AllArgsConstructor
 public class EnderecoResponseDTO {
 
     private Long id;
@@ -15,7 +14,4 @@ public class EnderecoResponseDTO {
     private String bairro;
     private CidadeResponseDTO cidade;
 
-    public void setTipoLogradouro(TipoLogradouro tipoLogradouro) {
-        this.tipoLogradouro = tipoLogradouro.getDescricao();
-    }
 }

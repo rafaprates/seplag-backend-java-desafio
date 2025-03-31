@@ -4,7 +4,7 @@ import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
 import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
-import com.seplag.servidores.unidade.dtos.responses.UnidadeResponse;
+import com.seplag.servidores.unidade.dtos.responses.UnidadeResponseDTO;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.services.UnidadeService;
 import jakarta.validation.Valid;
@@ -29,21 +29,21 @@ public class UnidadeController {
     }
 
     @GetMapping("/api/v1/unidades")
-    public ResponseEntity<Page<UnidadeResponse>> buscarTodas(Pageable pageable) {
-        Page<UnidadeResponse> unidades = unidadeService
+    public ResponseEntity<Page<UnidadeResponseDTO>> buscarTodas(Pageable pageable) {
+        Page<UnidadeResponseDTO> unidades = unidadeService
                 .buscarTodas(pageable)
-                .map(u -> modelMapper.map(u, UnidadeResponse.class));
+                .map(u -> modelMapper.map(u, UnidadeResponseDTO.class));
 
         return ResponseEntity.ok(unidades);
     }
 
     @GetMapping("/api/v1/unidades/{id}")
-    public ResponseEntity<UnidadeResponse> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<UnidadeResponseDTO> buscarPorId(@PathVariable Long id) {
         Unidade unidade = unidadeService
                 .buscarPorId(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Unidade não encontrada com o id %d".formatted(id)));
 
-        return ResponseEntity.ok(modelMapper.map(unidade, UnidadeResponse.class));
+        return ResponseEntity.ok(modelMapper.map(unidade, UnidadeResponseDTO.class));
     }
 
     @PutMapping("/api/v1/unidades/{id}")

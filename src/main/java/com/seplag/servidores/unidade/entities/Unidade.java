@@ -40,6 +40,10 @@ public class Unidade {
     )
     private Set<Endereco> enderecos = new HashSet<>();
 
+    public Unidade(long id) {
+        this.id = id;
+    }
+
     public Unidade(long id, String nome, String sigla, Set<Endereco> enderecos) {
         this.id = id;
         this.nome = nome;
