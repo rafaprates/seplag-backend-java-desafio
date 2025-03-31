@@ -28,7 +28,7 @@ public class Pessoa {
 
     @Column
     @Enumerated(EnumType.STRING)
-    protected Sexo pes_sexo;
+    protected Sexo sexo;
 
     @Column(name = "pes_mae")
     protected String mae;
@@ -47,7 +47,7 @@ public class Pessoa {
     public Pessoa(String nome, LocalDate dataNascimento, Sexo pes_sexo, String mae, String pai, Set<Endereco> enderecos) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
-        this.pes_sexo = pes_sexo;
+        this.sexo = pes_sexo;
         this.mae = mae;
         this.pai = pai;
         this.enderecos = enderecos;
