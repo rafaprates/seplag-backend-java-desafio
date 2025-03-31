@@ -1,10 +1,13 @@
 package com.seplag.servidores.unidade.services;
 
+import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
+import com.seplag.servidores.compartilhado.services.CidadeService;
 import com.seplag.servidores.compartilhado.services.EnderecoService;
-import com.seplag.servidores.unidade.dtos.requests.UnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.repositories.UnidadeRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -22,9 +26,10 @@ public class UnidadeService {
 
     private final UnidadeRepository unidadeRepository;
     private final EnderecoService enderecoService;
+    private final CidadeService cidadeService;
     private final EnderecoMapper enderecoMapper;
 
-    public Long criar(UnidadeRequest novaUnidade) {
+    public Long criar(NovaUnidadeRequest novaUnidade) {
         log.info("Criando nova unidade: {}", novaUnidade);
 
         Endereco endereco = enderecoMapper.toEntity(novaUnidade.endereco());
@@ -50,6 +55,35 @@ public class UnidadeService {
         return unidadeRepository.findById(id);
     }
 
+    public void atualizarPorId(Long id, UnidadeUpdateRequest unidade) {
+        log.info("Atualizando unidade com id {}", id);
+
+        if (!existsById(id))
+            throw new RecursoNaoEncontradoException("Unidade com id %d não encontrada".formatted(id));
+
+        Cidade cidadeAtualizada = cidadeService.findById(unidade.endereco().cidadeId());
+
+        Endereco enderecoAtualizado = new Endereco(
+                unidade.endereco().id(),
+                unidade.endereco().tipoLogradouro(),
+                unidade.endereco().logradouro(),
+                unidade.endereco().numero(),
+                unidade.endereco().bairro(),
+                cidadeAtualizada
+        );
+
+        enderecoAtualizado = enderecoService.atualizarPorId(enderecoAtualizado.getId(), enderecoAtualizado);
+
+        Unidade unidadeAtualizada = new Unidade(
+                id,
+                unidade.nome(),
+                unidade.sigla(),
+                Set.of(enderecoAtualizado)
+        );
+
+        unidadeRepository.save(unidadeAtualizada);
+    }
+
     public void deleteById(Long id) {
         log.info("Deletando unidade com id {}", id);
         Unidade unidade = unidadeRepository
@@ -57,5 +91,9 @@ public class UnidadeService {
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Unidade não encontrada com o id %d".formatted(id)));
 
         unidadeRepository.delete(unidade);
+    }
+
+    private boolean existsById(Long id) {
+        return unidadeRepository.existsById(id);
     }
 }

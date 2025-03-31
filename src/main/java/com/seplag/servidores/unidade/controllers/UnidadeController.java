@@ -2,7 +2,8 @@ package com.seplag.servidores.unidade.controllers;
 
 import com.seplag.servidores.compartilhado.dtos.response.RecursoIdResponse;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
-import com.seplag.servidores.unidade.dtos.requests.UnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
 import com.seplag.servidores.unidade.dtos.responses.UnidadeResponse;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.services.UnidadeService;
@@ -22,8 +23,8 @@ public class UnidadeController {
     private final ModelMapper modelMapper;
 
     @PostMapping("/api/v1/unidades")
-    public ResponseEntity<RecursoIdResponse> criarUnidade(@Valid @RequestBody UnidadeRequest novaUnidade) {
-        Long id = unidadeService.criar(novaUnidade);
+    public ResponseEntity<RecursoIdResponse> criarUnidade(@Valid @RequestBody NovaUnidadeRequest request) {
+        Long id = unidadeService.criar(request);
         return ResponseEntity.ok(new RecursoIdResponse(id));
     }
 
@@ -45,11 +46,16 @@ public class UnidadeController {
         return ResponseEntity.ok(modelMapper.map(unidade, UnidadeResponse.class));
     }
 
+    @PutMapping("/api/v1/unidades/{id}")
+    public ResponseEntity<Void> atualizarUnidade(@PathVariable Long id, @Valid @RequestBody UnidadeUpdateRequest request) {
+        unidadeService.atualizarPorId(id, request);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/api/v1/unidades/{id}")
     public ResponseEntity<Void> deletarPorId(@PathVariable Long id) {
         unidadeService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

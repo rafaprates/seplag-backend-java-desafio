@@ -46,6 +46,23 @@ public class Endereco {
         this.cidade = cidade;
     }
 
+    public Endereco(Long id, TipoLogradouro tipoLogradouro, String logradouro, int numero, String bairro, Cidade cidade) {
+        this.id = id;
+        this.tipoLogradouro = tipoLogradouro;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+    }
+
+    public Endereco(Long id, TipoLogradouro tipoLogradouro, String logradouro, int numero, String bairro) {
+        this.id = id;
+        this.tipoLogradouro = tipoLogradouro;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.bairro = bairro;
+    }
+
     public boolean hasId() {
         return id != null;
     }
