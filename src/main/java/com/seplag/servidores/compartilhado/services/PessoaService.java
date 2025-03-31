@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,12 @@ public class PessoaService {
                 .forEach(enderecoService::criar);
 
         return pessoaRepository.save(pessoa);
+    }
+
+    public Optional<Pessoa> buscarPorId(Long id) {
+        log.info("Buscando pessoa com ID: {}", id);
+
+        return pessoaRepository.findById(id);
     }
 
     public Pessoa atualizarPorId(Long id, Pessoa pessoa) {

@@ -48,4 +48,13 @@ public class Lotacao {
         this.dataRemocao = dataRemocao;
         this.portaria = portaria;
     }
+
+    public Lotacao(Long id, Pessoa pessoa, Unidade unidade, LocalDate dataLotacao, LocalDate dataRemocao, String portaria) {
+        this.id = id;
+        this.pessoa = pessoa;
+        this.unidade = unidade;
+        this.dataLotacao = dataLotacao;
+        this.dataRemocao = dataRemocao;
+        this.portaria = portaria;
+    }
 }
