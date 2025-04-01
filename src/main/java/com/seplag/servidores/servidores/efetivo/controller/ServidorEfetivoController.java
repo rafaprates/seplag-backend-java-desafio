@@ -1,9 +1,13 @@
 package com.seplag.servidores.servidores.efetivo.controller;
 
+import com.seplag.servidores.compartilhado.dtos.response.FotoResponseDTO;
 import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.entities.Endereco;
+import com.seplag.servidores.compartilhado.entities.Foto;
 import com.seplag.servidores.compartilhado.entities.Pessoa;
+import com.seplag.servidores.compartilhado.mappers.FotoMapper;
+import com.seplag.servidores.compartilhado.services.PessoaService;
 import com.seplag.servidores.servidores.efetivo.dtos.request.AtualizarServidorEfetivoDTO;
 import com.seplag.servidores.servidores.efetivo.dtos.request.CriarServidorEfetivoDTO;
 import com.seplag.servidores.servidores.efetivo.dtos.response.ServidorEfetivoResponseDTO;
@@ -15,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +32,8 @@ public class ServidorEfetivoController {
 
     private final ServidorEfetivoService servidorEfetivoService;
     private final ModelMapper modelMapper;
+    private final PessoaService pessoaService;
+    private final FotoMapper fotoMapper;
 
     @PostMapping
     public ResponseEntity<RecursoCriadoDTO> registrarServidorEfetivo(@RequestBody CriarServidorEfetivoDTO request) {
@@ -60,6 +67,12 @@ public class ServidorEfetivoController {
         long id = servidorEfetivoService.registrarServidorEfetivo(servidorEfetivoEntity).getId();
 
         return ResponseEntity.ok(new RecursoCriadoDTO(id));
+    }
+
+    @PostMapping("{id}/fotos")
+    public ResponseEntity<FotoResponseDTO> adicionarFoto(@PathVariable Long id, @RequestParam MultipartFile foto) {
+        Foto ft = pessoaService.adicionarFoto(id, foto);
+        return ResponseEntity.ok(fotoMapper.toDTO(ft));
     }
 
     @GetMapping

@@ -17,5 +17,6 @@ public class PessoaResponseDTO {
     private String mae;
     private String pai;
     Set<EnderecoResponseDTO> enderecos;
+    Set<FotoResponseDTO> fotos;
 
 }
