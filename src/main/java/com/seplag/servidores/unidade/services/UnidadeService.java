@@ -1,6 +1,5 @@
 package com.seplag.servidores.unidade.services;
 
-import com.seplag.servidores.compartilhado.entities.Cidade;
 import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
@@ -78,10 +77,6 @@ public class UnidadeService {
                 .stream()
                 .map(e -> enderecoService.atualizarPorId(e.getId(), e))
                 .collect(Collectors.toSet());
-
-//        Cidade cidadeAtualizada = cidadeService.buscarPorId(unidade.get
-
-//        enderecoAtualizado = enderecoService.atualizarPorId(enderecoAtualizado.getId(), enderecoAtualizado);
 
         Unidade unidadeAtualizada = new Unidade(
                 id,

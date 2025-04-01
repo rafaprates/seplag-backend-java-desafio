@@ -24,7 +24,6 @@ public class Lotacao {
 
     @ManyToOne
     @JoinColumn(name = "pes_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pessoa pessoa;
 
     @ManyToOne
