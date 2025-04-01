@@ -2,27 +2,21 @@ package com.seplag.servidores.servidores.efetivo.controller;
 
 import com.seplag.servidores.compartilhado.dtos.response.FotoResponseDTO;
 import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
-import com.seplag.servidores.compartilhado.entities.Cidade;
-import com.seplag.servidores.compartilhado.entities.Endereco;
 import com.seplag.servidores.compartilhado.entities.Foto;
-import com.seplag.servidores.compartilhado.entities.Pessoa;
 import com.seplag.servidores.compartilhado.mappers.FotoMapper;
 import com.seplag.servidores.compartilhado.services.PessoaService;
 import com.seplag.servidores.servidores.efetivo.dtos.request.AtualizarServidorEfetivoDTO;
 import com.seplag.servidores.servidores.efetivo.dtos.request.CriarServidorEfetivoDTO;
 import com.seplag.servidores.servidores.efetivo.dtos.response.ServidorEfetivoResponseDTO;
 import com.seplag.servidores.servidores.efetivo.entities.ServidorEfetivo;
+import com.seplag.servidores.servidores.efetivo.mapper.ServidorEfetivoMapper;
 import com.seplag.servidores.servidores.efetivo.services.ServidorEfetivoService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -31,42 +25,15 @@ import java.util.stream.Collectors;
 public class ServidorEfetivoController {
 
     private final ServidorEfetivoService servidorEfetivoService;
-    private final ModelMapper modelMapper;
     private final PessoaService pessoaService;
     private final FotoMapper fotoMapper;
+    private final ServidorEfetivoMapper servidorEfetivoMapper;
 
     @PostMapping
     public ResponseEntity<RecursoCriadoDTO> registrarServidorEfetivo(@RequestBody CriarServidorEfetivoDTO request) {
-        Set<Endereco> enderecoEntities = request
-                .pessoa()
-                .enderecos()
-                .stream()
-                .map(e -> new Endereco(
-                        e.tipoLogradouro(),
-                        e.logradouro(),
-                        e.numero(),
-                        e.bairro(),
-                        new Cidade(e.cidadeId())
-                ))
-                .collect(Collectors.toSet());
-
-        Pessoa pessoaEntity = new Pessoa(
-                request.pessoa().nome(),
-                request.pessoa().dataNascimento(),
-                request.pessoa().sexo(),
-                request.pessoa().mae(),
-                request.pessoa().pai(),
-                enderecoEntities
-        );
-
-        ServidorEfetivo servidorEfetivoEntity = new ServidorEfetivo(
-                request.matricula(),
-                pessoaEntity
-        );
-
-        long id = servidorEfetivoService.registrarServidorEfetivo(servidorEfetivoEntity).getId();
-
-        return ResponseEntity.ok(new RecursoCriadoDTO(id));
+        ServidorEfetivo entity = servidorEfetivoMapper.toEntity(request);
+        ServidorEfetivo servidorEfetivo = servidorEfetivoService.registrarServidorEfetivo(entity);
+        return ResponseEntity.ok(new RecursoCriadoDTO(servidorEfetivo.getId()));
     }
 
     @PostMapping("{id}/fotos")
@@ -79,16 +46,15 @@ public class ServidorEfetivoController {
     public ResponseEntity<Page<ServidorEfetivoResponseDTO>> buscarTodos(Pageable pageable) {
         Page<ServidorEfetivoResponseDTO> response = servidorEfetivoService
                 .buscarTodos(pageable)
-                .map(st -> modelMapper.map(st, ServidorEfetivoResponseDTO.class));
+                .map(servidorEfetivoMapper::toDTO);
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ServidorEfetivoResponseDTO> buscarPorId(@PathVariable Long id) {
-        ServidorEfetivo servidorTemporario = servidorEfetivoService.buscarPorId(id);
-        ServidorEfetivoResponseDTO response = modelMapper.map(servidorTemporario, ServidorEfetivoResponseDTO.class);
-        return ResponseEntity.ok(response);
+        ServidorEfetivo servidorEfetivo = servidorEfetivoService.buscarPorId(id);
+        return ResponseEntity.ok(servidorEfetivoMapper.toDTO(servidorEfetivo));
     }
 
     @PutMapping("/{id}")
@@ -96,38 +62,9 @@ public class ServidorEfetivoController {
             @PathVariable Long id,
             @RequestBody AtualizarServidorEfetivoDTO request
     ) {
-        Set<Endereco> enderecoEntities = request
-                .pessoa()
-                .enderecos()
-                .stream()
-                .map(e -> new Endereco(
-                        e.id(),
-                        e.tipoLogradouro(),
-                        e.logradouro(),
-                        e.numero(),
-                        e.bairro(),
-                        new Cidade(e.cidadeId())
-                ))
-                .collect(Collectors.toSet());
-
-        Pessoa pessoaEntity = new Pessoa(
-                request.pessoa().nome(),
-                request.pessoa().dataNascimento(),
-                request.pessoa().sexo(),
-                request.pessoa().mae(),
-                request.pessoa().pai(),
-                enderecoEntities
-        );
-
-        ServidorEfetivo servidorTemporarioEntity = new ServidorEfetivo(
-                request.matricula(),
-                pessoaEntity
-        );
-
-        servidorEfetivoService.atualizarPorId(id, servidorTemporarioEntity);
-
-        ServidorEfetivoResponseDTO response = modelMapper.map(servidorTemporarioEntity, ServidorEfetivoResponseDTO.class);
-        return ResponseEntity.ok(response);
+        ServidorEfetivo servidorTemporarioEntity = servidorEfetivoMapper.toEntity(request);
+        ServidorEfetivo servidorEfetivo = servidorEfetivoService.atualizarPorId(id, servidorTemporarioEntity);
+        return ResponseEntity.ok(servidorEfetivoMapper.toDTO(servidorEfetivo));
     }
 
     @DeleteMapping("/{id}")

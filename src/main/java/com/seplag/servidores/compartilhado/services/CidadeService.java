@@ -22,7 +22,7 @@ public class CidadeService {
         return cidadeRepository.save(cidade).getId();
     }
 
-    public Cidade findById(Long id) {
+    public Cidade buscarPorId(Long id) {
         if (id == null)
             throw new RecursoNaoEncontradoException("Cidade não encontrada");
 

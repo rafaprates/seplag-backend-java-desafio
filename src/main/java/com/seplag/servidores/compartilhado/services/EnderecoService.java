@@ -20,7 +20,7 @@ public class EnderecoService {
     public Endereco criar(@Valid Endereco endereco) {
         log.info("Criando novo endereço: {}", endereco);
 
-        Cidade cidade = cidadeService.findById(endereco.getCidade().getId());
+        Cidade cidade = cidadeService.buscarPorId(endereco.getCidade().getId());
         endereco.setCidade(cidade);
 
         return enderecoRepository.save(endereco);

@@ -8,6 +8,4 @@ import jakarta.validation.constraints.NotNull;
 public record CriarServidorEfetivoDTO(
         @NotNull @NotEmpty String matricula,
         @Valid CriarPessoaDTO pessoa
-) {
-
-}
+) { }

@@ -1,5 +1,6 @@
 package com.seplag.servidores.compartilhado.mappers;
 
+import com.seplag.servidores.compartilhado.dtos.request.AtualizarEnderecoDTO;
 import com.seplag.servidores.compartilhado.dtos.request.CriarEnderecoDTO;
 import com.seplag.servidores.compartilhado.dtos.response.EnderecoResponseDTO;
 import com.seplag.servidores.compartilhado.entities.Cidade;
@@ -13,13 +14,24 @@ public class EnderecoMapper {
 
     private final CidadeMapper cidadeMapper;
 
-    public Endereco toEntity(CriarEnderecoDTO request) {
+    public Endereco toEntity(CriarEnderecoDTO enderecoDTO) {
         return new Endereco(
-                request.tipoLogradouro(),
-                request.logradouro(),
-                request.numero(),
-                request.bairro(),
-                new Cidade(request.cidadeId())
+                enderecoDTO.tipoLogradouro(),
+                enderecoDTO.logradouro(),
+                enderecoDTO.numero(),
+                enderecoDTO.bairro(),
+                new Cidade(enderecoDTO.cidadeId())
+        );
+    }
+
+    public Endereco toEntity(AtualizarEnderecoDTO enderecoDTO) {
+        return new Endereco(
+                enderecoDTO.id(),
+                enderecoDTO.tipoLogradouro(),
+                enderecoDTO.logradouro(),
+                enderecoDTO.numero(),
+                enderecoDTO.bairro(),
+                new Cidade(enderecoDTO.cidadeId())
         );
     }
 

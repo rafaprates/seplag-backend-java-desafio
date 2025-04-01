@@ -85,7 +85,7 @@ public class UnidadeService {
         if (!existsById(id))
             throw new RecursoNaoEncontradoException("Unidade com id %d não encontrada".formatted(id));
 
-        Cidade cidadeAtualizada = cidadeService.findById(unidade.endereco().cidadeId());
+        Cidade cidadeAtualizada = cidadeService.buscarPorId(unidade.endereco().cidadeId());
 
         Endereco enderecoAtualizado = new Endereco(
                 unidade.endereco().id(),
