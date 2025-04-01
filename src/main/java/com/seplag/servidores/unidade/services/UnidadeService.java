@@ -94,10 +94,17 @@ public class UnidadeService {
                 .findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Unidade não encontrada com o id %d".formatted(id)));
 
+        deletarEnderecosAssociados(unidade);
+
         unidadeRepository.delete(unidade);
     }
 
     private boolean existsById(Long id) {
         return unidadeRepository.existsById(id);
+    }
+
+    private void deletarEnderecosAssociados(Unidade unidade) {
+        unidade.getEnderecos().clear();
+        unidadeRepository.save(unidade);
     }
 }
