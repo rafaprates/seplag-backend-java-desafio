@@ -12,6 +12,7 @@ import com.seplag.servidores.unidade.repositories.UnidadeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class UnidadeService {
         return unidadeRepository.findById(id);
     }
 
-    public List<ServidorEfetivoUnidadeResponseDTO> buscarServidoresEfetivosPorUnidadeId(Long id, Pageable pageable) {
+    public Page<ServidorEfetivoUnidadeResponseDTO> buscarServidoresEfetivosPorUnidadeId(Long id, Pageable pageable) {
         final String sql = """
                 SELECT
                   u.*, p.*, fp.*
@@ -58,12 +59,35 @@ public class UnidadeService {
                 INNER JOIN pessoa p ON p.pes_id = se.pes_id
                 LEFT JOIN foto_pessoa fp ON fp.pes_id = se.pes_id
                 WHERE u.unid_id = :unidadeId
+                OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY
                 """;
 
-        return jdbcClient
+        List<ServidorEfetivoUnidadeResponseDTO> correspondencias = jdbcClient
                 .sql(sql)
                 .param("unidadeId", id)
+                .param("offset", pageable.getOffset())
+                .param("pageSize", pageable.getPageSize())
                 .query(servidorEfetivoUnidadeMapper);
+
+        final String countSql = """
+                SELECT 
+                    COUNT(*)
+                FROM lotacao l
+                INNER JOIN unidade u ON u.unid_id = l.unid_id
+                INNER JOIN servidor_efetivo se ON se.pes_id = l.pes_id
+                INNER JOIN pessoa p ON p.pes_id = se.pes_id
+                LEFT JOIN foto_pessoa fp ON fp.pes_id = se.pes_id
+                WHERE u.unid_id = :unidadeId
+                """;
+
+        Long total = jdbcClient
+                .sql(countSql)
+                .param("unidadeId", id)
+                .query(Long.class)
+                .optional()
+                .orElse(0L);
+
+        return new PageImpl<>(correspondencias, pageable, total);
     }
 
     public void atualizarPorId(Long id, Unidade unidade) {

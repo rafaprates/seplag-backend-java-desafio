@@ -16,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/unidades")
@@ -42,8 +40,8 @@ public class UnidadeController {
     }
 
     @GetMapping("/{id}/servidores-efetivos")
-    public ResponseEntity<List<ServidorEfetivoUnidadeResponseDTO>> buscarServidoresEfetivos(@PathVariable Long id, Pageable pageable) {
-        List<ServidorEfetivoUnidadeResponseDTO> response = unidadeService.buscarServidoresEfetivosPorUnidadeId(id, pageable);
+    public ResponseEntity<Page<ServidorEfetivoUnidadeResponseDTO>> buscarServidoresEfetivos(@PathVariable Long id, Pageable pageable) {
+        Page<ServidorEfetivoUnidadeResponseDTO> response = unidadeService.buscarServidoresEfetivosPorUnidadeId(id, pageable);
         return ResponseEntity.ok(response);
     }
 
