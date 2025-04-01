@@ -1,6 +1,7 @@
 package com.seplag.servidores.unidade.entities;
 
 import com.seplag.servidores.compartilhado.entities.Endereco;
+import com.seplag.servidores.lotacao.entity.Lotacao;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -39,6 +40,9 @@ public class Unidade {
             inverseJoinColumns = @JoinColumn(name = "end_id")
     )
     private Set<Endereco> enderecos = new HashSet<>();
+
+    @OneToMany(mappedBy = "unidade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Lotacao> lotacoes = new HashSet<>();
 
     public Unidade(long id) {
         this.id = id;
