@@ -2,15 +2,15 @@ package com.seplag.servidores.unidade.controllers;
 
 import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
-import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
+import com.seplag.servidores.unidade.dtos.requests.CriarUnidadeDTO;
 import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
 import com.seplag.servidores.unidade.dtos.responses.ServidorEfetivoUnidadeResponseDTO;
 import com.seplag.servidores.unidade.dtos.responses.UnidadeResponseDTO;
 import com.seplag.servidores.unidade.entities.Unidade;
+import com.seplag.servidores.unidade.mapper.UnidadeMapper;
 import com.seplag.servidores.unidade.services.UnidadeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,11 @@ import java.util.List;
 public class UnidadeController {
 
     private final UnidadeService unidadeService;
-    private final ModelMapper modelMapper;
+    private final UnidadeMapper unidadeMapper;
 
     @PostMapping
-    public ResponseEntity<RecursoCriadoDTO> criarUnidade(@Valid @RequestBody NovaUnidadeRequest request) {
-        Long id = unidadeService.criar(request);
+    public ResponseEntity<RecursoCriadoDTO> criarUnidade(@Valid @RequestBody CriarUnidadeDTO request) {
+        Long id = unidadeService.criar(unidadeMapper.toEntity(request));
         return ResponseEntity.ok(new RecursoCriadoDTO(id));
     }
 
@@ -36,7 +36,7 @@ public class UnidadeController {
     public ResponseEntity<Page<UnidadeResponseDTO>> buscarTodas(Pageable pageable) {
         Page<UnidadeResponseDTO> unidades = unidadeService
                 .buscarTodas(pageable)
-                .map(u -> modelMapper.map(u, UnidadeResponseDTO.class));
+                .map(unidadeMapper::toDTO);
 
         return ResponseEntity.ok(unidades);
     }
@@ -53,12 +53,12 @@ public class UnidadeController {
                 .buscarPorId(id)
                 .orElseThrow(() -> new RecursoNaoEncontradoException("Unidade não encontrada com o id %d".formatted(id)));
 
-        return ResponseEntity.ok(modelMapper.map(unidade, UnidadeResponseDTO.class));
+        return ResponseEntity.ok(unidadeMapper.toDTO(unidade));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizarUnidade(@PathVariable Long id, @Valid @RequestBody UnidadeUpdateRequest request) {
-        unidadeService.atualizarPorId(id, request);
+        unidadeService.atualizarPorId(id, unidadeMapper.toEntity(request));
         return ResponseEntity.noContent().build();
     }
 

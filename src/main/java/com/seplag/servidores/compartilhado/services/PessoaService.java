@@ -28,14 +28,9 @@ public class PessoaService {
 
     public Pessoa registrarPessoa(Pessoa pessoa) {
         log.info("Registrando nova pessoa: {}", pessoa);
-
-        pessoa
-                .getEnderecos()
-                .forEach(enderecoService::criar);
-
+        pessoa.getEnderecos().forEach(enderecoService::criar);
         return pessoaRepository.save(pessoa);
     }
-
 
     public Foto adicionarFoto(Long pessoaId, MultipartFile foto) {
         Pessoa pessoa = this
@@ -57,7 +52,6 @@ public class PessoaService {
 
     public Optional<Pessoa> buscarPorId(Long id) {
         log.info("Buscando pessoa com ID: {}", id);
-
         return pessoaRepository.findById(id);
     }
 

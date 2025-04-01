@@ -6,8 +6,6 @@ import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoExcept
 import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
 import com.seplag.servidores.compartilhado.services.CidadeService;
 import com.seplag.servidores.compartilhado.services.EnderecoService;
-import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
-import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
 import com.seplag.servidores.unidade.dtos.responses.ServidorEfetivoUnidadeResponseDTO;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.mapper.ServidorEfetivoUnidadeMapper;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -35,20 +34,9 @@ public class UnidadeService {
     private final ServidorEfetivoUnidadeMapper servidorEfetivoUnidadeMapper;
     private final JdbcClient jdbcClient;
 
-    public Long criar(NovaUnidadeRequest novaUnidade) {
+    public Long criar(Unidade novaUnidade) {
         log.info("Criando nova unidade: {}", novaUnidade);
-
-        Endereco endereco = enderecoMapper.toEntity(novaUnidade.endereco());
-
-        endereco = enderecoService.criar(endereco);
-
-        Unidade unidade = new Unidade(
-                novaUnidade.nome(),
-                novaUnidade.sigla(),
-                endereco
-        );
-
-        return unidadeRepository.save(unidade).getId();
+        return unidadeRepository.save(novaUnidade).getId();
     }
 
     public Page<Unidade> buscarTodas(Pageable pageable) {
@@ -79,30 +67,27 @@ public class UnidadeService {
                 .query(servidorEfetivoUnidadeMapper);
     }
 
-    public void atualizarPorId(Long id, UnidadeUpdateRequest unidade) {
+    public void atualizarPorId(Long id, Unidade unidade) {
         log.info("Atualizando unidade com id {}", id);
 
         if (!existsById(id))
             throw new RecursoNaoEncontradoException("Unidade com id %d não encontrada".formatted(id));
 
-        Cidade cidadeAtualizada = cidadeService.buscarPorId(unidade.endereco().cidadeId());
+        Set<Endereco> enderecosAtualizados = unidade
+                .getEnderecos()
+                .stream()
+                .map(e -> enderecoService.atualizarPorId(e.getId(), e))
+                .collect(Collectors.toSet());
 
-        Endereco enderecoAtualizado = new Endereco(
-                unidade.endereco().id(),
-                unidade.endereco().tipoLogradouro(),
-                unidade.endereco().logradouro(),
-                unidade.endereco().numero(),
-                unidade.endereco().bairro(),
-                cidadeAtualizada
-        );
+//        Cidade cidadeAtualizada = cidadeService.buscarPorId(unidade.get
 
-        enderecoAtualizado = enderecoService.atualizarPorId(enderecoAtualizado.getId(), enderecoAtualizado);
+//        enderecoAtualizado = enderecoService.atualizarPorId(enderecoAtualizado.getId(), enderecoAtualizado);
 
         Unidade unidadeAtualizada = new Unidade(
                 id,
-                unidade.nome(),
-                unidade.sigla(),
-                Set.of(enderecoAtualizado)
+                unidade.getNome(),
+                unidade.getSigla(),
+                enderecosAtualizados
         );
 
         unidadeRepository.save(unidadeAtualizada);

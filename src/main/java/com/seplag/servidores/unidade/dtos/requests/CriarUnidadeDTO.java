@@ -6,7 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record NovaUnidadeRequest(
+public record CriarUnidadeDTO(
         @NotNull @NotBlank String nome,
         @Nullable String sigla,
         @Valid @NotNull CriarEnderecoDTO endereco
