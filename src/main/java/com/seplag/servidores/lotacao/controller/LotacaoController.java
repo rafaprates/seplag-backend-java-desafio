@@ -1,6 +1,8 @@
 package com.seplag.servidores.lotacao.controller;
 
+import com.seplag.servidores.compartilhado.dtos.response.EnderecoResponseDTO;
 import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
+import com.seplag.servidores.compartilhado.mappers.EnderecoMapper;
 import com.seplag.servidores.lotacao.dtos.request.AtualizarLotacaoDTO;
 import com.seplag.servidores.lotacao.dtos.request.CriarLotacaoDTO;
 import com.seplag.servidores.lotacao.dtos.response.LotacaoResponseDTO;
@@ -9,6 +11,9 @@ import com.seplag.servidores.lotacao.mapper.LotacaoMapper;
 import com.seplag.servidores.lotacao.service.LotacaoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +26,7 @@ public class LotacaoController {
 
     private final LotacaoService lotacaoService;
     private final LotacaoMapper lotacaoMapper;
+    private final EnderecoMapper enderecoMapper;
 
     @PostMapping
     public ResponseEntity<RecursoCriadoDTO> criar(@Valid @RequestBody CriarLotacaoDTO request) {
@@ -42,6 +48,26 @@ public class LotacaoController {
     public ResponseEntity<LotacaoResponseDTO> buscarPorId(@PathVariable Long id) {
         Lotacao lotacao = lotacaoService.buscarPorId(id);
         return ResponseEntity.ok(lotacaoMapper.toDTO(lotacao));
+    }
+
+    @GetMapping("/filtros")
+    public ResponseEntity<Page<EnderecoResponseDTO>> filtrarPorNomeServidor(@RequestParam String nomeServidor, Pageable pageable) {
+        Page<Lotacao> lotacoesPage = lotacaoService.filtrarPorNomeServidor(nomeServidor, pageable);
+
+        List<EnderecoResponseDTO> enderecos = lotacoesPage
+                .stream()
+                .map(Lotacao::getUnidade)
+                .flatMap(u -> u.getEnderecos().stream())
+                .map(enderecoMapper::toDTO)
+                .toList();
+
+        Page<EnderecoResponseDTO> enderecosPage = new PageImpl<>(
+                enderecos,
+                pageable,
+                lotacoesPage.getTotalElements()
+        );
+
+        return ResponseEntity.ok(enderecosPage);
     }
 
     @PutMapping("/{id}")
