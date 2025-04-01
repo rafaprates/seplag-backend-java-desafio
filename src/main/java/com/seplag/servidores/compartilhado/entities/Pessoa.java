@@ -44,6 +44,10 @@ public class Pessoa {
     )
     protected Set<Endereco> enderecos;
 
+    @OneToMany
+    @JoinColumn(name = "pes_id")
+    protected Set<Foto> fotos;
+
     public Pessoa(Long id) {
         this.id = id;
     }
