@@ -10,6 +10,8 @@ import com.seplag.servidores.unidade.services.UnidadeService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +37,10 @@ public class LotacaoService {
 
     public List<Lotacao> listarTodas() {
         return lotacaoRepository.findAll();
+    }
+
+    public Page<Lotacao> filtrarPorNomeServidor(String nomeServidor, Pageable pageable) {
+        return lotacaoRepository.findByPessoaNomeContainingIgnoreCase(nomeServidor, pageable);
     }
 
     public Lotacao atualizarPorId(Long id, Lotacao novaLotacao) {
