@@ -11,6 +11,7 @@ import com.seplag.servidores.servidores.temporario.dtos.response.ServidorTempora
 import com.seplag.servidores.servidores.temporario.entities.ServidorTemporario;
 import com.seplag.servidores.servidores.temporario.mapper.ServidorTemporarioMapper;
 import com.seplag.servidores.servidores.temporario.services.ServidorTemporarioService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/servidores-temporarios")
+@Tag(name = "Servidores Temporários", description = "CRUD completo para Servidores Temporários")
 public class ServidorTemporarioController {
 
     private final ServidorTemporarioService servidorTemporarioService;

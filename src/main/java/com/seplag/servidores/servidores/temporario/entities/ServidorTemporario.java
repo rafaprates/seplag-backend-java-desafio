@@ -1,6 +1,7 @@
 package com.seplag.servidores.servidores.temporario.entities;
 
 import com.seplag.servidores.compartilhado.entities.Pessoa;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Getter;
