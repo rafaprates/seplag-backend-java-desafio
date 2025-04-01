@@ -51,6 +51,12 @@ public class Unidade {
         this.enderecos = enderecos;
     }
 
+    public Unidade(long id, String nome, String sigla) {
+        this.id = id;
+        this.nome = nome;
+        this.sigla = sigla;
+    }
+
     public Unidade(String nome, String sigla, Endereco endereco) {
         this.nome = nome;
         this.sigla = sigla;

@@ -38,4 +38,14 @@ public class Foto {
         this.hash = hash;
         this.data = LocalDate.now();
     }
+
+    public Foto(LocalDate data, String bucket, String hash) {
+        this.data = data;
+        this.bucket = bucket;
+        this.hash = hash;
+    }
+
+    public boolean arquivoExiste() {
+        return this.bucket != null && this.hash != null;
+    }
 }
