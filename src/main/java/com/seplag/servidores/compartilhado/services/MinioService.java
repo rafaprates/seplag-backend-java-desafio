@@ -31,6 +31,9 @@ public class MinioService {
     }
 
     public String urlFoto(String bucketName, String objectName) throws Exception {
+        if (bucketName == null) return null;
+        if (objectName == null) return null;
+
         return minioClient.getPresignedObjectUrl(
                 GetPresignedObjectUrlArgs.builder()
                         .method(Method.GET)

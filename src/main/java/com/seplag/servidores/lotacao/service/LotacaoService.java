@@ -43,6 +43,10 @@ public class LotacaoService {
         return lotacaoRepository.findByPessoaNomeContainingIgnoreCase(nomeServidor, pageable);
     }
 
+//    public Page<Lotacao> filtrarPorServidorEfetivoEUnidadeId(Long unidadeId, Pageable pageable) {
+//        return lotacaoRepository.findAllByUnidadeIdAndServidorIsEfetivo(unidadeId, pageable);
+//    }
+
     public Lotacao atualizarPorId(Long id, Lotacao novaLotacao) {
         if (!existePorId(id))
             throw new RecursoNaoEncontradoException("Lotação não encontrada com ID: " + id);

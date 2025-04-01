@@ -4,6 +4,7 @@ import com.seplag.servidores.compartilhado.dtos.response.RecursoCriadoDTO;
 import com.seplag.servidores.compartilhado.exceptions.RecursoNaoEncontradoException;
 import com.seplag.servidores.unidade.dtos.requests.NovaUnidadeRequest;
 import com.seplag.servidores.unidade.dtos.requests.UnidadeUpdateRequest;
+import com.seplag.servidores.unidade.dtos.responses.ServidorEfetivoUnidadeResponseDTO;
 import com.seplag.servidores.unidade.dtos.responses.UnidadeResponseDTO;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.services.UnidadeService;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -36,6 +39,12 @@ public class UnidadeController {
                 .map(u -> modelMapper.map(u, UnidadeResponseDTO.class));
 
         return ResponseEntity.ok(unidades);
+    }
+
+    @GetMapping("/{id}/servidores-efetivos")
+    public ResponseEntity<List<ServidorEfetivoUnidadeResponseDTO>> buscarServidoresEfetivos(@PathVariable Long id, Pageable pageable) {
+        List<ServidorEfetivoUnidadeResponseDTO> response = unidadeService.buscarServidoresEfetivosPorUnidadeId(id, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
