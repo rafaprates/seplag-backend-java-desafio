@@ -9,6 +9,7 @@ import com.seplag.servidores.lotacao.dtos.response.LotacaoResponseDTO;
 import com.seplag.servidores.lotacao.entity.Lotacao;
 import com.seplag.servidores.lotacao.mapper.LotacaoMapper;
 import com.seplag.servidores.lotacao.service.LotacaoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/lotacoes")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/lotacoes")
+@Tag(name = "Lotação", description = "CRUD completo para Lotação")
 public class LotacaoController {
 
     private final LotacaoService lotacaoService;

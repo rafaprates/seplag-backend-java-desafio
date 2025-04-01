@@ -9,6 +9,7 @@ import com.seplag.servidores.unidade.dtos.responses.UnidadeResponseDTO;
 import com.seplag.servidores.unidade.entities.Unidade;
 import com.seplag.servidores.unidade.mapper.UnidadeMapper;
 import com.seplag.servidores.unidade.services.UnidadeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/unidades")
+@Tag(name = "Unidades", description = "CRUD completo para Unidades")
 public class UnidadeController {
 
     private final UnidadeService unidadeService;

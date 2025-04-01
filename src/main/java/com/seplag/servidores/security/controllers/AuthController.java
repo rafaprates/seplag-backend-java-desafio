@@ -1,9 +1,11 @@
 package com.seplag.servidores.security.controllers;
 
+import com.seplag.servidores.security.dto.LoginResponseDTO;
 import com.seplag.servidores.security.dto.RefreshTokenRequest;
 import com.seplag.servidores.security.dto.RefreshTokenResponseDTO;
 import com.seplag.servidores.security.services.TokenService;
-import com.seplag.servidores.security.dto.LoginResponseDTO;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "Autenticação", description = "Emite tokens de autenticação, bem como permite sua renovação")
 public class AuthController {
 
     private final TokenService tokenService;

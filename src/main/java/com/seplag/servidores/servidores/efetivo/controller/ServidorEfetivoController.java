@@ -11,6 +11,7 @@ import com.seplag.servidores.servidores.efetivo.dtos.response.ServidorEfetivoRes
 import com.seplag.servidores.servidores.efetivo.entities.ServidorEfetivo;
 import com.seplag.servidores.servidores.efetivo.mapper.ServidorEfetivoMapper;
 import com.seplag.servidores.servidores.efetivo.services.ServidorEfetivoService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/servidores-efetivos")
+@Tag(name = "Servidores Efetivos", description = "CRUD completo para Servidores Efetivos")
 public class ServidorEfetivoController {
 
     private final ServidorEfetivoService servidorEfetivoService;
