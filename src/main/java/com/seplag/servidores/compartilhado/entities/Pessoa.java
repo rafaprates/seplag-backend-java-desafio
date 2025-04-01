@@ -1,11 +1,13 @@
 package com.seplag.servidores.compartilhado.entities;
 
+import com.seplag.servidores.lotacao.entity.Lotacao;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -44,9 +46,11 @@ public class Pessoa {
     )
     protected Set<Endereco> enderecos;
 
-    @OneToMany
-    @JoinColumn(name = "pes_id")
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
     protected Set<Foto> fotos;
+
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Lotacao> lotacoes = new HashSet<>();
 
     public Pessoa(Long id) {
         this.id = id;

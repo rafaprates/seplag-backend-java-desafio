@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -22,6 +24,7 @@ public class Lotacao {
 
     @ManyToOne
     @JoinColumn(name = "pes_id")
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Pessoa pessoa;
 
     @ManyToOne
