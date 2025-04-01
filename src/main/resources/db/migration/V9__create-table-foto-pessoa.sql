@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS foto_pessoa (
-    fp_id BIGINT PRIMARY KEY,
+    fp_id SERIAL PRIMARY KEY,
     pes_id BIGINT NOT NULL,
     fp_data DATE NOT NULL,
     fp_bucket VARCHAR(50) NOT NULL,
