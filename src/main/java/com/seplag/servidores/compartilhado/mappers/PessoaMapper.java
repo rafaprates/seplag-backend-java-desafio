@@ -68,6 +68,7 @@ public class PessoaMapper {
                 .collect(Collectors.toSet());
 
         return new PessoaResponseDTO(
+                pessoa.getId(),
                 pessoa.getNome(),
                 pessoa.getDataNascimento(),
                 pessoa.getSexo(),

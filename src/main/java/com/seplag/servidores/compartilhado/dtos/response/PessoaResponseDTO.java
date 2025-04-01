@@ -11,6 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class PessoaResponseDTO {
 
+    private Long id;
     private String nome;
     private LocalDate dataNascimento;
     private Sexo sexo;

@@ -11,7 +11,7 @@ public class ServidorEfetivoResponseDTO extends PessoaResponseDTO {
     private String matricula;
 
     public ServidorEfetivoResponseDTO(PessoaResponseDTO pessoaDTO, String matricula) {
-        super(pessoaDTO.getNome(), pessoaDTO.getDataNascimento(), pessoaDTO.getSexo(), pessoaDTO.getMae(), pessoaDTO.getPai(), pessoaDTO.getEnderecos(), pessoaDTO.getFotos());
+        super(pessoaDTO.getId(), pessoaDTO.getNome(), pessoaDTO.getDataNascimento(), pessoaDTO.getSexo(), pessoaDTO.getMae(), pessoaDTO.getPai(), pessoaDTO.getEnderecos(), pessoaDTO.getFotos());
         this.matricula = matricula;
     }
 }

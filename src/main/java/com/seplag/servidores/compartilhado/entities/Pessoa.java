@@ -52,6 +52,14 @@ public class Pessoa {
         this.id = id;
     }
 
+    public Pessoa(String nome, LocalDate dataNascimento, Sexo sexo, String mae, String pai) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.sexo = sexo;
+        this.mae = mae;
+        this.pai = pai;
+    }
+
     public Pessoa(String nome, LocalDate dataNascimento, Sexo pes_sexo, String mae, String pai, Set<Endereco> enderecos) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
