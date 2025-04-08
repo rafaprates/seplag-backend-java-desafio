@@ -10,17 +10,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/cidades")
 @Tag(name = "Cidades", description = "Cria cidades que serão atribuídas aos endereços dos servidores ou das unidades")
 public class CidadeController {
 
     private final CidadeService cidadeService;
     private final CidadeMapper cidadeMapper;
 
-    @PostMapping("/api/v1/cidades")
+    @PostMapping
     public ResponseEntity<RecursoCriadoDTO> criarNovaCidade(@Valid @RequestBody CriarCidadeDTO request) {
         Long id = cidadeService.criar(cidadeMapper.toEntity(request));
         return ResponseEntity.ok(new RecursoCriadoDTO(id));
