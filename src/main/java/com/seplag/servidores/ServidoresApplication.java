@@ -1,6 +1,6 @@
 package com.seplag.servidores;
 
-import com.seplag.servidores.security.config.RsaKeyProperties;
+import com.seplag.servidores.config.RsaKeyProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
