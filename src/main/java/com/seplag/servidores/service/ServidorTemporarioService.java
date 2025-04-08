@@ -1,8 +1,8 @@
 package com.seplag.servidores.service;
 
 import com.seplag.servidores.entity.Endereco;
-import com.seplag.servidores.exception.RecursoNaoEncontradoException;
 import com.seplag.servidores.entity.ServidorTemporario;
+import com.seplag.servidores.exception.RecursoNaoEncontradoException;
 import com.seplag.servidores.repository.ServidorTemporarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,8 +56,16 @@ public class ServidorTemporarioService {
     }
 
     public void deletarPorId(Long id) {
-        log.info("Deletando servidor temporário com ID: {}", id);
-        ServidorTemporario servidorTemporario = buscarPorId(id);
-        servidorTemporarioRepository.delete(servidorTemporario);
+        log.info("Deletando servidor efetivo com ID: {}", id);
+
+        ServidorTemporario servidor = buscarPorId(id);
+
+        servidor
+                .getEnderecos()
+                .forEach(e -> enderecoService.deleteById(e.getId()));
+
+        servidor.getEnderecos().clear();
+
+        servidorTemporarioRepository.delete(servidor);
     }
 }

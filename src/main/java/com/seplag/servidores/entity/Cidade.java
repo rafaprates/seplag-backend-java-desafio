@@ -35,16 +35,6 @@ public class Cidade {
         this.uf = uf;
     }
 
-    public Cidade(Long id, String nome, Estado uf) {
-        this.id = id;
-        this.nome = nome;
-        this.uf = uf;
-    }
-
-    public boolean hasId() {
-        return id != null;
-    }
-
     @Override
     public String toString() {
         return "Cidade{" +

@@ -35,10 +35,6 @@ public class Lotacao {
     @Column(name = "lot_portaria")
     private String portaria;
 
-    public Lotacao(Long id) {
-        this.id = id;
-    }
-
     public Lotacao(Pessoa pessoa, Unidade unidade, LocalDate dataLotacao, LocalDate dataRemocao, String portaria) {
         this.pessoa = pessoa;
         this.unidade = unidade;

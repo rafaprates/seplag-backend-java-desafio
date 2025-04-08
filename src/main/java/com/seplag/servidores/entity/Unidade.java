@@ -31,7 +31,7 @@ public class Unidade {
     private String sigla;
 
     // Set impossibilita a duplicação de endereços
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "unidade_endereco",
             joinColumns = @JoinColumn(name = "unid_id"),

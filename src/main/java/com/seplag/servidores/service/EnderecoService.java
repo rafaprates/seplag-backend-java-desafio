@@ -17,6 +17,13 @@ public class EnderecoService {
     private final EnderecoRepository enderecoRepository;
     private final CidadeService cidadeService;
 
+    public Endereco buscarPorId(Long id) {
+        if (id == null) throw new RecursoNaoEncontradoException("Endereço não encontrado");
+        return enderecoRepository
+                .findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Endereço não encontrado"));
+    }
+
     public Endereco criar(@Valid Endereco endereco) {
         log.info("Criando novo endereço: {}", endereco);
 
@@ -42,6 +49,12 @@ public class EnderecoService {
         );
 
         return enderecoRepository.save(enderecoAtualizado);
+    }
+
+    public void deleteById(Long id) {
+        log.info("Deletando endereço com id {}", id);
+        Endereco endereco = buscarPorId(id);
+        enderecoRepository.delete(endereco);
     }
 
     private boolean existsById(Long id) {
