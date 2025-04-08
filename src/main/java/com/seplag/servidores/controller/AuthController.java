@@ -1,13 +1,15 @@
 package com.seplag.servidores.controller;
 
+import com.seplag.servidores.dto.request.LoginRequest;
 import com.seplag.servidores.dto.request.RefreshTokenRequest;
 import com.seplag.servidores.dto.response.LoginResponseDTO;
 import com.seplag.servidores.dto.response.RefreshTokenResponseDTO;
 import com.seplag.servidores.service.TokenService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +25,8 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> token(Authentication authentication) {
-        UserDetails principal = (UserDetails) authentication.getPrincipal();
+    public ResponseEntity<LoginResponseDTO> token(@Valid @RequestBody LoginRequest loginRequest) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         String token = tokenService.gerarToken(principal);
         String refreshToken = tokenService.gerarRefreshToken(principal);
