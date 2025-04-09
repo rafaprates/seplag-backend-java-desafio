@@ -1,21 +1,17 @@
 package com.seplag.servidores.service;
 
-import com.seplag.servidores.entity.Endereco;
-import com.seplag.servidores.exception.RecursoNaoEncontradoException;
-import com.seplag.servidores.mapper.EnderecoMapper;
 import com.seplag.servidores.dto.response.ServidorEfetivoUnidadeResponseDTO;
+import com.seplag.servidores.entity.Endereco;
 import com.seplag.servidores.entity.Unidade;
-import com.seplag.servidores.mapper.ServidorEfetivoUnidadeMapper;
+import com.seplag.servidores.exception.RecursoNaoEncontradoException;
+import com.seplag.servidores.repository.UnidadeJdbcRepository;
 import com.seplag.servidores.repository.UnidadeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,10 +23,7 @@ public class UnidadeService {
 
     private final UnidadeRepository unidadeRepository;
     private final EnderecoService enderecoService;
-    private final CidadeService cidadeService;
-    private final EnderecoMapper enderecoMapper;
-    private final ServidorEfetivoUnidadeMapper servidorEfetivoUnidadeMapper;
-    private final JdbcClient jdbcClient;
+    private final UnidadeJdbcRepository unidadeJdbcRepository;
 
     public Long criar(Unidade novaUnidade) {
         log.info("Criando nova unidade: {}", novaUnidade);
@@ -48,44 +41,7 @@ public class UnidadeService {
     }
 
     public Page<ServidorEfetivoUnidadeResponseDTO> buscarServidoresEfetivosPorUnidadeId(Long id, Pageable pageable) {
-        final String sql = """
-                SELECT
-                  u.*, p.*, fp.*
-                FROM lotacao l
-                INNER JOIN unidade u ON u.unid_id = l.unid_id
-                INNER JOIN servidor_efetivo se ON se.pes_id = l.pes_id
-                INNER JOIN pessoa p ON p.pes_id = se.pes_id
-                LEFT JOIN foto_pessoa fp ON fp.pes_id = se.pes_id
-                WHERE u.unid_id = :unidadeId
-                OFFSET :offset ROWS FETCH NEXT :pageSize ROWS ONLY
-                """;
-
-        List<ServidorEfetivoUnidadeResponseDTO> correspondencias = jdbcClient
-                .sql(sql)
-                .param("unidadeId", id)
-                .param("offset", pageable.getOffset())
-                .param("pageSize", pageable.getPageSize())
-                .query(servidorEfetivoUnidadeMapper);
-
-        final String countSql = """
-                SELECT 
-                    COUNT(*)
-                FROM lotacao l
-                INNER JOIN unidade u ON u.unid_id = l.unid_id
-                INNER JOIN servidor_efetivo se ON se.pes_id = l.pes_id
-                INNER JOIN pessoa p ON p.pes_id = se.pes_id
-                LEFT JOIN foto_pessoa fp ON fp.pes_id = se.pes_id
-                WHERE u.unid_id = :unidadeId
-                """;
-
-        Long total = jdbcClient
-                .sql(countSql)
-                .param("unidadeId", id)
-                .query(Long.class)
-                .optional()
-                .orElse(0L);
-
-        return new PageImpl<>(correspondencias, pageable, total);
+        return unidadeJdbcRepository.buscarServidoresEfetivosPorUnidadeId(id, pageable);
     }
 
     public void atualizarPorId(Long id, Unidade unidade) {
