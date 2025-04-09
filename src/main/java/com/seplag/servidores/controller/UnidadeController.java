@@ -9,6 +9,7 @@ import com.seplag.servidores.dto.response.UnidadeResponseDTO;
 import com.seplag.servidores.entity.Unidade;
 import com.seplag.servidores.mapper.UnidadeMapper;
 import com.seplag.servidores.service.UnidadeService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class UnidadeController {
         return ResponseEntity.ok(unidades);
     }
 
+    @Operation(summary = "Consulta servidores efetivos por unidade")
     @GetMapping("/{id}/servidores-efetivos")
     public ResponseEntity<Page<ServidorEfetivoUnidadeResponseDTO>> buscarServidoresEfetivos(@PathVariable Long id, Pageable pageable) {
         Page<ServidorEfetivoUnidadeResponseDTO> response = unidadeService.buscarServidoresEfetivosPorUnidadeId(id, pageable);

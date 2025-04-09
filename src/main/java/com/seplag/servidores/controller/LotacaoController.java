@@ -1,14 +1,15 @@
 package com.seplag.servidores.controller;
 
-import com.seplag.servidores.dto.response.EnderecoResponseDTO;
-import com.seplag.servidores.dto.response.RecursoCriadoDTO;
-import com.seplag.servidores.mapper.EnderecoMapper;
 import com.seplag.servidores.dto.request.AtualizarLotacaoDTO;
 import com.seplag.servidores.dto.request.CriarLotacaoDTO;
+import com.seplag.servidores.dto.response.EnderecoResponseDTO;
 import com.seplag.servidores.dto.response.LotacaoResponseDTO;
+import com.seplag.servidores.dto.response.RecursoCriadoDTO;
 import com.seplag.servidores.entity.Lotacao;
+import com.seplag.servidores.mapper.EnderecoMapper;
 import com.seplag.servidores.mapper.LotacaoMapper;
 import com.seplag.servidores.service.LotacaoService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -52,9 +53,10 @@ public class LotacaoController {
         return ResponseEntity.ok(lotacaoMapper.toDTO(lotacao));
     }
 
-    @GetMapping("/filtros")
-    public ResponseEntity<Page<EnderecoResponseDTO>> filtrarPorNomeServidor(@RequestParam String nomeServidor, Pageable pageable) {
-        Page<Lotacao> lotacoesPage = lotacaoService.filtrarPorNomeServidor(nomeServidor, pageable);
+    @GetMapping("/por-parte-nome-servidor")
+    @Operation(summary = "Consulta endereço funcional a partir de parte do nome do Servidor Efetivo")
+    public ResponseEntity<Page<EnderecoResponseDTO>> filtrarPorNomeServidor(@RequestParam String parteNomeServidor, Pageable pageable) {
+        Page<Lotacao> lotacoesPage = lotacaoService.filtrarPorNomeServidor(parteNomeServidor, pageable);
 
         List<EnderecoResponseDTO> enderecos = lotacoesPage
                 .stream()

@@ -147,7 +147,7 @@ Esta funcionalidade está disponível no end-point
 ### 2.7 Consultar endereço funcional a partir de parte do nome do Servidor Efetivo
 
 Esta funcionalidade está disponível no end-point
-`GET /api/v1/lotacoes/filtros?nomeServidor={parteNome}`.
+`GET /api/v1/lotacoes/por-parte-nome-servidor?nomeServidor={parteNome}`.
 
 ### 2.8 Realizar o upload de uma ou mais fotografias
 
