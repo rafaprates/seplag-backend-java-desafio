@@ -1,7 +1,7 @@
 package com.seplag.servidores.mapper;
 
-import com.seplag.servidores.entity.Foto;
 import com.seplag.servidores.dto.response.ServidorEfetivoUnidadeResponseDTO;
+import com.seplag.servidores.entity.Foto;
 import com.seplag.servidores.entity.Unidade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -22,10 +22,10 @@ public class ServidorEfetivoUnidadeMapper implements ResultSetExtractor<List<Ser
     private final FotoMapper fotoMapper;
     private final UnidadeMapper unidadeMapper;
 
-    private HashMap<Long, ServidorEfetivoUnidadeResponseDTO> porServidorId = new HashMap<>();
 
     @Override
     public List<ServidorEfetivoUnidadeResponseDTO> extractData(ResultSet rs) throws SQLException, DataAccessException {
+        HashMap<Long, ServidorEfetivoUnidadeResponseDTO> porServidorId = new HashMap<>();
 
         while (rs.next()) {
             Long servidorId = rs.getLong("pes_id");
