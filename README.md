@@ -100,18 +100,16 @@ Por sua vez, os endereços estão associados a uma Cidade.
 Dessa forma, é necessário criar uma Cidade antes de criar um Servidor Efetivo ou Temporário, ou uma
 Unidade.
 
-A Cidade pode ser criada através do end-point disponível no Swagger, na seção Cidades,
-que pode ser acessado por este
-[link](http://localhost:8080/swagger-ui/index.html#/Cidades).
+A Cidade pode ser criada através do end-point disponível no Swagger, na 
+[seção Cidades](http://localhost:8080/swagger-ui/index.html#/Cidades).
 
 - 🚨 Os valores do campo ``uf`` são ENUM e devem ser: ``MT``, ``SP``, ``RJ`` etc. [Consultar todos os
   valores disponíveis](https://github.com/rafaprates/seplag-backend-java-desafio/blob/main/src/main/java/com/seplag/servidores/entity/Estado.java).
 
 ### 2.2 CRUD em Servidor Efetivo
 
-Todos os end-points relacionados a CRUD em Servidor Efetivo estão disponíveis no Swagger, na
-seção Servidores Efetivos, que podem ser acessados por este
-[link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos).
+Todos os end-points relacionados a CRUD em Servidor Efetivo estão disponíveis no Swagger, na 
+[seção Servidores Efetivos](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos).
 
 - 🚨 Os valores do campo ``tipoLogradouro`` são definidos em um ENUM e devem ser: ``RUA``,
   ``AVENIDA``,
@@ -122,27 +120,24 @@ seção Servidores Efetivos, que podem ser acessados por este
 
 ### 2.3 CRUD em Servidor Temporário
 
-Todos os end-points relacionados a CRUD em Servidor Temporário estão disponíveis no Swagger, na
-seção Servidores Temporários, que podem ser acessados por este
-[link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios).
+Todos os end-points relacionados a CRUD em Servidor Temporário estão disponíveis no Swagger, na 
+[seção Servidores Temporários](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios).
 
 - Os valores para os campos ``tipoLogradouro`` e ``sexo`` devem respeitar as regras descritas em
   [CRUD em Servidor Efetivo](#22-crud-em-servidor-efetivo).
 
 ### 2.4 CRUD em Unidades
 
-Todos os end-points relacionados a CRUD em Unidades estão disponíveis no Swagger, na seção
-Unidades, que podem ser acessados por este
-[link](http://localhost:8080/swagger-ui/index.html#/Unidades).
+Todos os end-points relacionados a CRUD em Unidades estão disponíveis no Swagger, na
+[seção Unidades](http://localhost:8080/swagger-ui/index.html#/Unidades).
 
 - Os valores para os campos ``tipoLogradouro`` e ``sexo`` devem respeitar as regras descritas em
   [CRUD em Servidor Efetivo](#22-crud-em-servidor-efetivo).
 
 ### 2.5 CRUD em Lotações
 
-Todos os end-points relacionados a CRUD em Lotações estão disponíveis no Swagger, na seção
-Lotações, que podem ser acessados por este
-[link](http://localhost:8080/swagger-ui/index.html#/Lota%C3%A7%C3%A3o).
+Todos os end-points relacionados a CRUD em Lotações estão disponíveis no Swagger, na 
+[seção Lotações](http://localhost:8080/swagger-ui/index.html#/Lota%C3%A7%C3%A3o).
 
 ### 2.6 Consultar Servidores Efetivos por Unidade
 
@@ -157,9 +152,8 @@ Esta funcionalidade está disponível no end-point
 ### 2.8 Realizar o upload de uma ou mais fotografias
 
 - Em Servidor Efetivo
-    - ``POST /api/v1/servidores-efetivos/{id}/fotos``, o qual pode ser acessado no Swagger por
-      este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos/adicionarFoto_1).
+    - ``POST /api/v1/servidores-efetivos/{id}/fotos``, o qual pode ser acessado no Swagger por este
+      [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos/adicionarFoto_1).
 - Em Servidor Temporário
-    - ``POST /api/v1/servidores-temporarios/{id}/fotos``, o qual pode ser acessador no Swagger
-      por
-      este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios/adicionarFoto).
+    - ``POST /api/v1/servidores-temporarios/{id}/fotos``, o qual pode ser acessador no Swagger 
+      por este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios/adicionarFoto).
