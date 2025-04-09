@@ -68,7 +68,7 @@ Todas as depedências do Docker Compose estão amazenadas em Container Registry 
 esta aplicação Java/Spring Boot. Por isso, basta executar o comando `docker compose up`, facilitando
 o processo de instalação e execução da aplicação.
 
-#### D. Banco de dados
+#### E. Banco de dados
 
 A aplicação utiliza o banco de dados **PostgreSQL**, o qual está rodando em um container.
 
