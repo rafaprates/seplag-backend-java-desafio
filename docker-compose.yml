@@ -1,4 +1,15 @@
 services:
+  backend:
+    image: rp35/seplag-servidores
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - seplag-network
+    depends_on:
+      - database
+      - minio
+
   database:
     image: postgres:17
     container_name: postgres
@@ -10,16 +21,6 @@ services:
       - "5432:5432"
     networks:
       - seplag-network
-
-  backend:
-    image: rp35/seplag-servidores
-    container_name: backend-servidores
-    ports:
-      - "8080:8080"
-    networks:
-      - seplag-network
-    depends_on:
-      - database
 
   minio:
     image: minio/minio
