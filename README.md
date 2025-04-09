@@ -1,3 +1,17 @@
+# Dados do candidato
+
+| Campo             | Informação                          |
+|-------------------|-------------------------------------|
+| Inscrição         | 9533                                |
+| Nome              | RAFAEL BRUNO PRATES BARBOSA CARDOSO |
+| E-mail            | rafaelbprates@gmail.com             |
+| CPF               | Omitido por questões de segurança   |
+| RG                | Omitido por questões de segurança   |
+| Telefone          | -                                   |
+| Celular           | Omitido por questões de segurança   |
+| Data da Inscrição | 08/04/2025 18:23:49                 |
+| PCD               | Não                                 |
+
 # 1. Como rodar a aplicação
 
 Em uma máquina com o Docker instalado, execute o seguinte comando:
@@ -109,7 +123,7 @@ seção Servidores Efetivos, que podem ser acessados por este
   ``AVENIDA``,
   ``TRAVESSA``,
   etc. [Consultar todos os valores disponíveis](https://github.com/rafaprates/seplag-backend-java-desafio/blob/main/src/main/java/com/seplag/servidores/entity/TipoLogradouro.java).
-- 🚨 Os valores do campo ``sexo`` são definidos em um ENUM e devem ser: ``MASCULINO`` ou 
+- 🚨 Os valores do campo ``sexo`` são definidos em um ENUM e devem ser: ``MASCULINO`` ou
   ``FEMININO``.
 
 ### 2.3 CRUD em Servidor Temporário
