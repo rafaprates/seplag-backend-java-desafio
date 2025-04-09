@@ -17,7 +17,7 @@
 Em uma máquina com o Docker instalado, execute o seguinte comando:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 A aplicação será executada na porta 8080.
@@ -25,7 +25,7 @@ A aplicação será executada na porta 8080.
 # 2. Como testar a aplicação
 
 Para facilitar os testes, foi disponibiliazdo o **Swagger** da aplicação, que pode ser acessado
-através da URL `http://localhost:8080/swagger-ui/index.html`.
+através desta [URL](http://localhost:8080/swagger-ui/index.html).
 
 ## 2.1 Requisitos Gerais
 
@@ -71,7 +71,7 @@ A paginação foi implementada em todos os end-points que retornam listas.
 ### 2.1.3 Conteineirização
 
 Todas as depedências do Docker Compose estão amazenadas em Container Registry na nuvem, inclusive
-esta aplicação Java/Spring Boot. Por isso, basta executar o comando `docker-compose up`, facilitando
+esta aplicação Java/Spring Boot. Por isso, basta executar o comando `docker compose up`, facilitando
 o processo de instalação e execução da aplicação.
 
 #### D. Banco de dados
@@ -91,7 +91,7 @@ containers e são orquestrados pelo **Docker Compose**. Os serviços orquestrado
 Para subir a aplicação basta executar o comando
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 na raiz do projeto. Assim, todos os serviços serão iniciados e estarão prontos para uso.
