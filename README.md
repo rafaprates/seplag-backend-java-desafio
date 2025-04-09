@@ -29,13 +29,14 @@ foi disponibilizado um usuário padrão:
 }
 ```
 
-No [Swagger](http://localhost:8080/swagger-ui/index.html#/Autentica%C3%A7%C3%A3o), faça login com o
+No [Swagger](http://localhost:8080/swagger-ui/index.html), faça login com o
 usuário e senha acima no end-point `/api/v1/auth/login`. O retorno será um **token JWT** e um
-**refresh token**. 
+**refresh token**.
 
 O token JWT deve ser utilizado para autenticar as requisições na aplicação.
 Para isso, copie o token e clique no botão "Authorize" no canto superior direito do Swagger. Cole o
-token no campo " Value" e clique em "Authorize". O Swagger irá adicionar o token em todas as requisições.
+token no campo " Value" e clique em "Authorize". O Swagger irá adicionar o token em todas as
+requisições.
 
 #### B. Refresh Token
 
@@ -85,14 +86,18 @@ na raiz do projeto. Assim, todos os serviços serão iniciados e estarão pronto
 
 ### 2.1 Pré-requisito
 
-Os Servidores Efetivos e Temporários, bem como as Unidades, necessitam de um endereço. 
-Por sua vez, os endereços estão associados a uma Cidade. 
+Os Servidores Efetivos e Temporários, bem como as Unidades, necessitam de um endereço.
+Por sua vez, os endereços estão associados a uma Cidade.
 
-Dessa forma, é necessário criar uma Cidade antes de criar um Servidor Efetivo ou Temporário, ou uma Unidade.
+Dessa forma, é necessário criar uma Cidade antes de criar um Servidor Efetivo ou Temporário, ou uma
+Unidade.
 
-A Cidade pode ser criada através do end-point disponível no Swagger, na seção Cidades, 
+A Cidade pode ser criada através do end-point disponível no Swagger, na seção Cidades,
 que pode ser acessado por este
 [link](http://localhost:8080/swagger-ui/index.html#/Cidades).
+
+- 🚨 Os valores do campo ``uf`` são ENUM e devem ser: ``MT``, ``SP``, ``RJ`` etc. [Consultar todos os
+  valores disponíveis](https://github.com/rafaprates/seplag-backend-java-desafio/blob/main/src/main/java/com/seplag/servidores/entity/Estado.java).
 
 ### 2.2 CRUD em Servidor Efetivo
 
@@ -100,17 +105,30 @@ Todos os end-points relacionados a CRUD em Servidor Efetivo estão disponíveis 
 seção Servidores Efetivos, que podem ser acessados por este
 [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos).
 
+- 🚨 Os valores do campo ``tipoLogradouro`` são definidos em um ENUM e devem ser: ``RUA``,
+  ``AVENIDA``,
+  ``TRAVESSA``,
+  etc. [Consultar todos os valores disponíveis](https://github.com/rafaprates/seplag-backend-java-desafio/blob/main/src/main/java/com/seplag/servidores/entity/TipoLogradouro.java).
+- 🚨 Os valores do campo ``sexo`` são definidos em um ENUM e devem ser: ``MASCULINO`` ou 
+  ``FEMININO``.
+
 ### 2.3 CRUD em Servidor Temporário
 
 Todos os end-points relacionados a CRUD em Servidor Temporário estão disponíveis no Swagger, na
 seção Servidores Temporários, que podem ser acessados por este
 [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios).
 
+- Os valores para os campos ``tipoLogradouro`` e ``sexo`` devem respeitar as regras descritas em
+  [CRUD em Servidor Efetivo](#22-crud-em-servidor-efetivo).
+
 ### 2.4 CRUD em Unidades
 
 Todos os end-points relacionados a CRUD em Unidades estão disponíveis no Swagger, na seção
 Unidades, que podem ser acessados por este
 [link](http://localhost:8080/swagger-ui/index.html#/Unidades).
+
+- Os valores para os campos ``tipoLogradouro`` e ``sexo`` devem respeitar as regras descritas em
+  [CRUD em Servidor Efetivo](#22-crud-em-servidor-efetivo).
 
 ### 2.5 CRUD em Lotações
 
@@ -120,17 +138,20 @@ Lotações, que podem ser acessados por este
 
 ### 2.6 Consultar Servidores Efetivos por Unidade
 
-Esta funcionalidade está disponível no end-point `GET /api/v1/unidades/{unidadeId}/servidores-efetivos`.
+Esta funcionalidade está disponível no end-point
+`GET /api/v1/unidades/{unidadeId}/servidores-efetivos`.
 
 ### 2.7 Consultar endereço funcional a partir de parte do nome do Servidor Efetivo
 
-Esta funcionalidade está disponível no end-point `GET /api/v1/lotacoes/filtros?nomeServidor={parteNome}`.
+Esta funcionalidade está disponível no end-point
+`GET /api/v1/lotacoes/filtros?nomeServidor={parteNome}`.
 
 ### 2.8 Realizar o upload de uma ou mais fotografias
 
 - Em Servidor Efetivo
-  - ``POST /api/v1/servidores-efetivos/{id}/fotos``, o qual pode ser acessado no Swagger por 
-    este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos/adicionarFoto_1).
+    - ``POST /api/v1/servidores-efetivos/{id}/fotos``, o qual pode ser acessado no Swagger por
+      este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Efetivos/adicionarFoto_1).
 - Em Servidor Temporário
-  - ``POST /api/v1/servidores-temporarios/{id}/fotos``, o qual pode ser acessador no Swagger 
-    por este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios/adicionarFoto).
+    - ``POST /api/v1/servidores-temporarios/{id}/fotos``, o qual pode ser acessador no Swagger
+      por
+      este [link](http://localhost:8080/swagger-ui/index.html#/Servidores%20Tempor%C3%A1rios/adicionarFoto).
