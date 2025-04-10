@@ -4,7 +4,6 @@
 - Inscrição II: 10088 - DESENVOLVEDOR FULL STACK - PLENO
 - Nome: RAFAEL BRUNO PRATES BARBOSA CARDOSO
 - E-mail: rafaelbprates@gmail.com
-- Data da Inscrição: 08/04/2025 18:23:49
 - PCD: Não
 
 # 1. Como rodar a aplicação
